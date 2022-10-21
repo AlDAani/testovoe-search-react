@@ -1,5 +1,5 @@
 import { QueryStatus } from "@reduxjs/toolkit/dist/query";
-import {useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { SearchResponce } from "../Search/types";
 import styles from './style.module.pcss'
 
@@ -14,25 +14,24 @@ const Dropdown = ({list, status}: DropdownProps) => {
         status !== 'rejected' && status !== 'fulfilled' ? <div className={styles.noData}>
             { isLoading ? 'загрузка' : 'Ничего не найдено'}
         </div> : null
-    ), [list, status])
-
-    const generateContent = useCallback(() => (
-        list.map((el) => {
-            return (
-                <div className={styles.item} key={el.logo}>
-                    <div><img src={el.logo} width={54} height={54} /></div>
-                    <div className={styles.about}>
-                        <div>{el.name}</div>
-                        <div className={styles.domain}>{el.domain}</div>
-                    </div>
-                </div>
-            )
-        }
-    )), [list]);
+    ), [isLoading, status])
 
     return (
         <div className={styles.dropdown}>
-            {(isLoading || !list.length) ? plug : generateContent()}
+            {(isLoading || !list.length) ? plug : (
+                list.map((el) => {
+                        return (
+                            <div className={styles.item} key={el.logo}>
+                                <img alt="Logo" src={el.logo} width={54} height={54} />
+                                <div className={styles.about}>
+                                    <div>{el.name}</div>
+                                    <div className={styles.domain}>{el.domain}</div>
+                                </div>
+                            </div>
+                        )
+                    }
+            )
+                )}
         </div>
     )
 }

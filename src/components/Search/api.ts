@@ -3,8 +3,9 @@ import {SearchRequest, SearchResponce } from './types';
 
 export const api = createApi({
     reducerPath: 'api',
-    // здесь можно вынести на отельные части, но для экономии времени я этого делать не буду
-    baseQuery: fetchBaseQuery({baseUrl: 'https://autocomplete.clearbit.com/v1/'}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'https://autocomplete.clearbit.com/v1/'
+    }),
     endpoints: (builder) => ({
         getData: builder.query<SearchResponce, SearchRequest>({
             query: (params) => ({
@@ -15,4 +16,4 @@ export const api = createApi({
     })
 })
 
-export const {useGetDataQuery, useLazyGetDataQuery} = api;
+export const {useLazyGetDataQuery} = api;
